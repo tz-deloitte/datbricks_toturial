@@ -1,9 +1,11 @@
-# Databricks notebook source
+%python
+
 try:
     # Check if the mount point already exists
     if any(mount.mountPoint == '/mnt/real_estate_short_sample_5k' for mount in dbutils.fs.mounts()):
         # Unmount the existing mount point
         dbutils.fs.unmount('/mnt/real_estate_short_sample_5k')
+        print("Unmount successful")
     else:
         # Mount the storage location
         dbutils.fs.mount(
@@ -16,17 +18,10 @@ try:
         print("Mount successful")
 except Exception as e:
     # Handle any errors that occur during mount
-    print("Error occurred during mount:", str(e))
-
-# COMMAND ----------
-
-try:
-    # Read the file using Python
-    file_path = "/mnt/real_estate_short_sample_5k/real_estate_short_sample_5k.csv"
-    df = spark.read.format("csv").option("header", "true").load(file_path)
-
-    # Display a limited number of rows in the DataFrame
-    display(df.limit(10))  # Displaying only the first 10 rows
-except Exception as e:
-    # Handle any errors that occur during file reading
-    print("Error occurred during file reading:", str(e))
+    if isinstance(e, FileNotFoundError):
+        print("File or directory not found:", str(e))
+    else:
+        print("Error occurred during mount:", str(e))
+finally:
+    # Code to run regardless of whether an exception occurred or not
+    print("Mount process completed")

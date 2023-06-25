@@ -14,6 +14,7 @@
 -- COMMAND ----------
 
 -- MAGIC %sql
+-- MAGIC
 -- MAGIC -- Query the view
 -- MAGIC SELECT *
 -- MAGIC FROM vw_real_estate;

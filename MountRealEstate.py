@@ -1,5 +1,6 @@
 %python
 
+
 try:
     # Check if the mount point already exists
     if any(mount.mountPoint == '/mnt/real_estate_short_sample_5k' for mount in dbutils.fs.mounts()):
